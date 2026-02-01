@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker | Personal Finance Dashboard</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="src/css/utils/variables.css">
+    <link rel="stylesheet" href="src/css/utils/utilities.css">
+    <link rel="stylesheet" href="src/css/utils/animations.css">
+    <link rel="stylesheet" href="src/css/components/header.css">
+    <link rel="stylesheet" href="src/css/components/cards.css">
+    <link rel="stylesheet" href="src/css/components/forms.css">
+    <link rel="stylesheet" href="src/css/components/tables.css">
+    <link rel="stylesheet" href="src/css/components/charts.css">
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-wallet"></i>
+                    <h1>Expense<span>Tracker</span></h1>
+                </div>
+                
+                <div class="nav-controls">
+                    <button class="btn-icon" id="theme-toggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <button class="btn-icon" id="export-btn" aria-label="Export data">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    
+                    <button class="btn-icon" id="import-btn" aria-label="Import data">
+                        <i class="fas fa-upload"></i>
+                    </button>
+                    
+                    <input type="file" id="import-file" accept=".json" hidden>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <!-- Dashboard Summary Cards -->
+        <section class="dashboard-summary">
+            <div class="summary-card balance-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-balance-scale"></i> Current Balance</h3>
+                    <span class="card-badge">Total</span>
+                </div>
+                <div class="card-content">
+                    <h2 id="current-balance">$0.00</h2>
+                    <p class="card-subtitle">Available Funds</p>
+                </div>
+                <div class="card-footer">
+                    <span class="trend positive">
+                        <i class="fas fa-arrow-up"></i> 12% from last month
+                    </span>
+                </div>
+            </div>
+            
+            <div class="summary-card income-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-money-bill-wave"></i> Total Income</h3>
+                    <span class="card-badge">This Month</span>
+                </div>
+                <div class="card-content">
+                    <h2 id="total-income">$0.00</h2>
+                    <p class="card-subtitle">From all sources</p>
+                </div>
+            </div>
+            
+            <div class="summary-card expense-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-shopping-cart"></i> Total Expenses</h3>
+                    <span class="card-badge">This Month</span>
+                </div>
+                <div class="card-content">
+                    <h2 id="total-expenses">$0.00</h2>
+                    <p class="card-subtitle">Across all categories</p>
+                </div>
+            </div>
+            
+            <div class="summary-card budget-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-line"></i> Monthly Budget</h3>
+                    <span class="card-badge" id="budget-status">Set Budget</span>
+                </div>
+                <div class="card-content">
+                    <h2 id="monthly-budget">$2,500.00</h2>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="budget-progress"></div>
+                    </div>
+                    <p class="card-subtitle" id="budget-remaining">$2,500.00 remaining</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <div class="content-grid">
+            <!-- Left Column: Add Transaction & Recent Transactions -->
+            <div class="left-column">
+                <!-- Add Transaction Form -->
+                <div class="card transaction-form-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-plus-circle"></i> Add New Transaction</h3>
+                    </div>
+                    <div class="card-content">
+                        <form id="transaction-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="description">
+                                        <i class="fas fa-align-left"></i> Description
+                                    </label>
+                                    <input type="text" id="description" 
+                                           placeholder="Enter transaction description" 
+                                           required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="amount">
+                                        <i class="fas fa-dollar-sign"></i> Amount
+                                    </label>
+                                    <input type="number" id="amount" 
+                                           step="0.01" 
+                                           min="0.01" 
+                                           placeholder="0.00" 
+                                           required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="type">
+                                        <i class="fas fa-exchange-alt"></i> Type
+                                    </label>
+                                    <div class="type-selector">
+                                        <button type="button" class="type-btn active" data-type="expense">
+                                            <i class="fas fa-arrow-up"></i> Expense
+                                        </button>
+                                        <button type="button" class="type-btn" data-type="income">
+                                            <i class="fas fa-arrow-down"></i> Income
+                                        </button>
+                                    </div>
+                                    <input type="hidden" id="type" value="expense">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="category">
+                                        <i class="fas fa-tag"></i> Category
+                                    </label>
+                                    <select id="category" required>
+                                        <!-- Categories will be populated by JavaScript -->
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="date">
+                                        <i class="fas fa-calendar"></i> Date
+                                    </label>
+                                    <input type="date" id="date" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="payment-method">
+                                        <i class="fas fa-credit-card"></i> Payment Method
+                                    </label>
+                                    <select id="payment-method">
+                                        <option value="cash">Cash</option>
+                                        <option value="debit">Debit Card</option>
+                                        <option value="credit">Credit Card</option>
+                                        <option value="bank">Bank Transfer</option>
+                                        <option value="digital">Digital Wallet</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" id="clear-form">
+                                    <i class="fas fa-times"></i> Clear
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Add Transaction
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Recent Transactions -->
+                <div class="card transactions-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> Recent Transactions</h3>
+                        <div class="filter-controls">
+                            <select id="transaction-filter">
+                                <option value="all">All Transactions</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="table-container">
+                            <table class="transactions-table" id="transactions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Category</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactions-list">
+                                    <!-- Transactions will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Empty State -->
+                        <div class="empty-state" id="empty-transactions">
+                            <div class="empty-icon">
+                                <i class="fas fa-receipt"></i>
+                            </div>
+                            <h4>No transactions yet</h4>
+                            <p>Add your first transaction to get started</p>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="pagination" id="pagination">
+                            <button class="pagination-btn" id="prev-page" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <span class="page-info" id="page-info">Page 1 of 1</span>
+                            <button class="pagination-btn" id="next-page" disabled>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Charts & Insights -->
+            <div class="right-column">
+                <!-- Expense Distribution Chart -->
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-pie"></i> Expense Distribution</h3>
+                        <div class="chart-controls">
+                            <select id="chart-period">
+                                <option value="month">This Month</option>
+                                <option value="quarter">This Quarter</option>
+                                <option value="year">This Year</option>
+                                <option value="all">All Time</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="chart-container">
+                            <canvas id="expenseChart"></canvas>
+                        </div>
+                        <div class="chart-legend" id="chart-legend">
+                            <!-- Legend will be populated here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Monthly Overview Chart -->
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-bar"></i> Monthly Overview</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="chart-container">
+                            <canvas id="monthlyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Category Breakdown -->
+                <div class="card insights-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-lightbulb"></i> Spending Insights</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="insights-list" id="insights-list">
+                            <!-- Insights will be populated here -->
+                        </div>
+                        <div class="empty-state" id="empty-insights">
+                            <div class="empty-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4>No insights yet</h4>
+                            <p>Add more transactions to see insights</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <p>© 2024 Expense Tracker. Built with HTML, CSS & JavaScript.</p>
+                <p>Data is stored locally in your browser.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link" id="reset-data">
+                    <i class="fas fa-trash"></i> Reset All Data
+                </a>
+                <a href="#" class="footer-link" id="backup-data">
+                    <i class="fas fa-database"></i> Backup Data
+                </a>
+                <a href="#" class="footer-link" id="privacy-info">
+                    <i class="fas fa-shield-alt"></i> Privacy
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Confirm Action</h3>
+                <button class="modal-close" id="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message">Are you sure you want to perform this action?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="btn btn-danger" id="modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="src/js/utils/helpers.js"></script>
+    <script src="src/js/utils/validators.js"></script>
+    <script src="src/js/utils/formatters.js"></script>
+    <script src="src/js/modules/storage.js"></script>
+    <script src="src/js/modules/transactions.js"></script>
+    <script src="src/js/modules/calculations.js"></script>
+    <script src="src/js/modules/charts.js"></script>
+    <script src="src/js/modules/ui.js"></script>
+    <script src="src/js/app.js"></script>
+</body>
+</html>
