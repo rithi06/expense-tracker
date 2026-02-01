@@ -1,0 +1,17 @@
+{
+  "name": "expense-tracker",
+  "version": "1.0.0",
+  "description": "A personal finance dashboard to track income and expenses",
+  "main": "src/js/app.js",
+  "scripts": {
+    "start": "live-server .",
+    "build": "echo 'Build process would go here'",
+    "test": "echo 'No tests yet'"
+  },
+  "keywords": ["finance", "expense-tracker", "dashboard", "javascript"],
+  "author": "Rithika",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
