@@ -13,13 +13,18 @@ export const storage = {
 
     // Initialize storage with default data
     initialize: () => {
+        console.log('Initializing storage...');
+        
         // Initialize transactions if not exists
         if (!storage.get(storage.keys.TRANSACTIONS)) {
+            console.log('Initializing empty transactions array');
             storage.set(storage.keys.TRANSACTIONS, []);
         }
 
         // Initialize categories if not exists
-        if (!storage.get(storage.keys.CATEGORIES)) {
+        const existingCategories = storage.get(storage.keys.CATEGORIES);
+        if (!existingCategories || existingCategories.length === 0) {
+            console.log('Initializing default categories...');
             const defaultCategories = [
                 { id: 'food', name: 'Food & Dining', icon: 'utensils', type: 'expense', color: '#FF6B6B' },
                 { id: 'transportation', name: 'Transportation', icon: 'car', type: 'expense', color: '#4ECDC4' },
@@ -28,13 +33,17 @@ export const storage = {
                 { id: 'utilities', name: 'Utilities', icon: 'bolt', type: 'expense', color: '#118AB2' },
                 { id: 'health', name: 'Health', icon: 'heartbeat', type: 'expense', color: '#EF476F' },
                 { id: 'education', name: 'Education', icon: 'graduation-cap', type: 'expense', color: '#7209B7' },
+                { id: 'housing', name: 'Housing', icon: 'home', type: 'expense', color: '#073B4C' },
                 { id: 'other', name: 'Other', icon: 'ellipsis-h', type: 'expense', color: '#6C757D' },
                 { id: 'salary', name: 'Salary', icon: 'money-bill-wave', type: 'income', color: '#4CC9F0' },
                 { id: 'freelance', name: 'Freelance', icon: 'laptop-code', type: 'income', color: '#4361EE' },
                 { id: 'investment', name: 'Investment', icon: 'chart-line', type: 'income', color: '#3A0CA3' },
-                { id: 'gift', name: 'Gift', icon: 'gift', type: 'income', color: '#F72585' }
+                { id: 'gift', name: 'Gifts Received', icon: 'gift', type: 'income', color: '#F72585' }
             ];
             storage.set(storage.keys.CATEGORIES, defaultCategories);
+            console.log('Default categories initialized:', defaultCategories);
+        } else {
+            console.log('Categories already exist:', existingCategories.length, 'categories found');
         }
 
         // Initialize budgets if not exists

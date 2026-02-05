@@ -1,0 +1,162 @@
+[
+  {
+    "id": "food",
+    "name": "Food & Dining",
+    "icon": "utensils",
+    "type": "expense",
+    "color": "#FF6B6B",
+    "description": "Groceries, restaurants, coffee shops"
+  },
+  {
+    "id": "transportation",
+    "name": "Transportation",
+    "icon": "car",
+    "type": "expense",
+    "color": "#4ECDC4",
+    "description": "Fuel, public transport, taxis, maintenance"
+  },
+  {
+    "id": "shopping",
+    "name": "Shopping",
+    "icon": "shopping-bag",
+    "type": "expense",
+    "color": "#FFD166",
+    "description": "Clothing, electronics, household items"
+  },
+  {
+    "id": "entertainment",
+    "name": "Entertainment",
+    "icon": "film",
+    "type": "expense",
+    "color": "#06D6A0",
+    "description": "Movies, concerts, games, subscriptions"
+  },
+  {
+    "id": "utilities",
+    "name": "Utilities",
+    "icon": "bolt",
+    "type": "expense",
+    "color": "#118AB2",
+    "description": "Electricity, water, gas, internet, phone"
+  },
+  {
+    "id": "health",
+    "name": "Health",
+    "icon": "heartbeat",
+    "type": "expense",
+    "color": "#EF476F",
+    "description": "Medical, pharmacy, fitness, insurance"
+  },
+  {
+    "id": "education",
+    "name": "Education",
+    "icon": "graduation-cap",
+    "type": "expense",
+    "color": "#7209B7",
+    "description": "Courses, books, tuition, workshops"
+  },
+  {
+    "id": "housing",
+    "name": "Housing",
+    "icon": "home",
+    "type": "expense",
+    "color": "#073B4C",
+    "description": "Rent, mortgage, repairs, maintenance"
+  },
+  {
+    "id": "travel",
+    "name": "Travel",
+    "icon": "plane",
+    "type": "expense",
+    "color": "#3A86FF",
+    "description": "Flights, hotels, vacations"
+  },
+  {
+    "id": "personal",
+    "name": "Personal Care",
+    "icon": "user",
+    "type": "expense",
+    "color": "#8338EC",
+    "description": "Haircuts, cosmetics, self-care"
+  },
+  {
+    "id": "gifts",
+    "name": "Gifts & Donations",
+    "icon": "gift",
+    "type": "expense",
+    "color": "#FB5607",
+    "description": "Presents, charities, tips"
+  },
+  {
+    "id": "other",
+    "name": "Other Expenses",
+    "icon": "ellipsis-h",
+    "type": "expense",
+    "color": "#6C757D",
+    "description": "Miscellaneous expenses"
+  },
+  {
+    "id": "salary",
+    "name": "Salary",
+    "icon": "money-bill-wave",
+    "type": "income",
+    "color": "#4CC9F0",
+    "description": "Regular employment income"
+  },
+  {
+    "id": "freelance",
+    "name": "Freelance",
+    "icon": "laptop-code",
+    "type": "income",
+    "color": "#4361EE",
+    "description": "Freelance or contract work"
+  },
+  {
+    "id": "investment",
+    "name": "Investment",
+    "icon": "chart-line",
+    "type": "income",
+    "color": "#3A0CA3",
+    "description": "Dividends, interest, capital gains"
+  },
+  {
+    "id": "gift",
+    "name": "Gifts Received",
+    "icon": "gift",
+    "type": "income",
+    "color": "#F72585",
+    "description": "Monetary gifts, bonuses"
+  },
+  {
+    "id": "business",
+    "name": "Business Income",
+    "icon": "briefcase",
+    "type": "income",
+    "color": "#7209B7",
+    "description": "Business revenue, sales"
+  },
+  {
+    "id": "rental",
+    "name": "Rental Income",
+    "icon": "building",
+    "type": "income",
+    "color": "#4CC9F0",
+    "description": "Property rental income"
+  },
+  {
+    "id": "refund",
+    "name": "Refunds",
+    "icon": "undo",
+    "type": "income",
+    "color": "#06D6A0",
+    "description": "Purchase returns, reimbursements"
+  },
+  {
+    "id": "other_income",
+    "name": "Other Income",
+    "icon": "coins",
+    "type": "income",
+    "color": "#FFD166",
+    "description": "Miscellaneous income sources"
+  }
+]

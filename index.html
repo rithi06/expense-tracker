@@ -361,7 +361,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Files -->
+    <!-- Load JavaScript files in correct order -->
     <script src="src/js/utils/helpers.js"></script>
     <script src="src/js/utils/validators.js"></script>
     <script src="src/js/utils/formatters.js"></script>
@@ -371,5 +371,33 @@
     <script src="src/js/modules/charts.js"></script>
     <script src="src/js/modules/ui.js"></script>
     <script src="src/js/app.js"></script>
+    
+    <!-- Fallback script for debugging -->
+    <script>
+        // Debug script to check if everything loaded
+        window.addEventListener('load', function() {
+            console.log('Page fully loaded');
+            
+            // Check if modules loaded
+            const modules = ['helpers', 'validators', 'formatters', 'storage', 'transactions', 'calculations', 'charts', 'ui', 'app'];
+            modules.forEach(module => {
+                console.log(`${module} loaded:`, typeof window[module] !== 'undefined');
+            });
+            
+            // Check if categories are loaded
+            setTimeout(() => {
+                if (window.storage && window.storage.keys) {
+                    const categories = window.storage.get(window.storage.keys.CATEGORIES);
+                    console.log('Categories in storage:', categories);
+                    
+                    // Check dropdown
+                    const categorySelect = document.getElementById('category');
+                    if (categorySelect) {
+                        console.log('Category select has options:', categorySelect.options.length);
+                    }
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
